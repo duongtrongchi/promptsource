@@ -5,9 +5,11 @@ templates:
     id: 17b83a3f-f748-42e6-9cdf-b2951dd8299d
     jinja: '{% set seq = [
 
-      ''Trả lời câu hỏi sau dựa vào context được cung cấp: '',
+      ''Trả lời câu hỏi sau dựa vào context được cung cấp ở dưới đây: '',
 
-      ''Câu trả lời là gì?'',
+      ''Hãy dựa vào context mà tôi sẽ cung cấp cho bạn dưới đây và trả lời câu hỏi.'',
+
+      ''Dựa vào context mà tôi sắp cung cấp cho bạn, hãy trả lời câu hỏi.''
 
       ] %}
 
@@ -22,7 +24,7 @@ templates:
 
       {% if answers.text == [] %}
 
-      Câu trả lời không có trong context
+      Xin lỗi, nhưng tôi không tìm thấy câu trả lời dựa vào context mà bạn đã cung cấp.
 
       {% else %}
 
@@ -44,11 +46,11 @@ templates:
     id: 189dcc58-fd13-4771-ad03-7879a61c7ab7
     jinja: '{% if answers.text != [] %}
 
-      Tìm câu hỏi mà bạn có thể hỏi để có được câu trả lời sau, dựa vào context được cho trước
+      Từ context và từ khoá dưới đây, hãy liệt kê cho tôi tất cả các câu hỏi mà bạn có thể hỏi.
 
       Context: {{context}};
 
-      Câu trả lời: {{answers.text[0]}};
+      Từ khoá: {{answers.text[0]}};
 
       Câu hỏi: |||
 
@@ -83,9 +85,7 @@ templates:
 
       ''Tôi muốn biết chủ đề của đoạn văn này là gì?'',
 
-      ''Hãy cho tôi biết chủ đề của đoạn văn sau: '',
-
-      ''Dựa vào ngữ cảnh của đoạn văn sau, xác định chủ đề của đoạn văn này: '',
+      ''Hãy cho tôi biết chủ đề của đoạn văn sau: ''
 
       ] %}
 
@@ -180,23 +180,17 @@ templates:
     id: 8bea1123-fd8d-4bac-96bf-b8a289ee74b3
     jinja: '{% set seq = [
 
-      ''Dựa vào nội dung của đoạn văn sau, hãy cho tôi biết '',
+      ''Hãy trả lời cho tôi '',
 
-      ''Hãy lấy thông tin của đoạn văn bản cho trước và trả lời cho tôi câu hỏi sau: '',
-
-      ''Từ nội dung của đoạn văn trên, hãy cho tôi biết '',
+      ''Từ nội dung của đoạn văn cho trước, hãy cho tôi biết '',
 
       ''Dựa vào thông tin của đoạn văn bản phía trước hãy trả lời cho tôi biết '',
 
-      ''Dựa vào thông tin của đoạn văn bản phía trước hãy trả lời câu hỏi sau: '',
+      ''Câu trả lời cho câu hỏi sau là gì? '',
 
-      ''Từ nội dung của đoạn văn phía trước, hãy cho tôi biết '',
+      ''Tìm câu trả lời cho câu hỏi sau: '',
 
-      ''Hãy trả lời câu hỏi: '',
-
-      ''Từ đoạn văn cho trước hãy tìm câu trả lời của câu hỏi:  '',
-
-      ''Answer: '',
+      ''Trả lời: '',
 
       '''',
 
@@ -206,7 +200,7 @@ templates:
 
       {% if answers.text == [] %}
 
-      Câu trả lời không có trong context
+      Xin lỗi, nhưng tôi không thể tìm thấy câu trả lời dựa vào context mà bạn đã cung cấp.
 
       {% else %}
 
@@ -224,108 +218,10 @@ templates:
     name: Questions with Context - Without Prompt Keywords
     reference: Given context and question, give answer. No keywords to delineate context
       and question is given.
-  b14c9843-fd56-42ff-817d-39e41963c847: !Template
-    answer_choices: null
-    id: b14c9843-fd56-42ff-817d-39e41963c847
-    jinja: '{% set seq = [
-
-      ''Hãy tìm câu trả lời dựa vào context sau:'',
-
-      ''Câu trả lời là gì?'',
-
-      ''Đáp án là gì?'',
-
-      ] %}
-
-
-      {{ seq | choice }}
-
-      Context: {{context}};
-
-      Câu hỏi: {{question}};
-
-      Nếu bạn không tìm thấy câu trả lời, hãy trả lời "unanswerable"
-
-      Câu trả lời: |||
-
-      {% if answers.text == [] %}
-
-      unanswerable
-
-      {% else %}
-
-      {{answers.text[0]}}
-
-      {% endif %}'
-    metadata: *id001
-    name: Questions with Context +unanswerable
-    reference: Given context and question, give answer
-  d768c181-1c9b-40c3-aa01-fc78c3b29875: !Template
-    answer_choices: null
-    id: d768c181-1c9b-40c3-aa01-fc78c3b29875
-    jinja: '{% if answers.text != [] %}
-
-      {{question}}|||
-
-      {{answers.text[0]}}
-
-      {% endif %}'
-    metadata: !TemplateMetadata
-      choices_in_prompt: false
-      languages:
-      - en
-      - vi
-      metrics:
-      - BLEU
-      - ROUGE
-      original_task: false
-    name: Trivia
-    reference: Given input and directly outputs answer.
-  e1630107-8f5d-44ce-8ccd-6fa80da80328: !Template
-    answer_choices: null
-    id: e1630107-8f5d-44ce-8ccd-6fa80da80328
-    jinja: '{% set seq = [
-
-      ''Hãy trả lời câu hỏi sau: '',
-
-      ''Trả lời câu hỏi: '',
-
-      ''Tôi muốn biết câu trả lời của '',
-
-      ''Tôi muốn hỏi rằng '',
-
-      ''Câu hỏi của tôi là '',
-
-      ''Trả lời câu hỏi sau: '',
-
-      ''Tìm câu trả lời của câu hỏi: '',
-
-      ''Câu trả lời: '',
-
-      '''',
-
-      ] %}
-
-      {{context}} {{ seq | choice }}{{question}} Nếu bạn không thể tìm được đáp án, hãy
-      trả lời là "unanswerable". |||
-
-      {% if answers.text == [] %}
-
-      unanswerable
-
-      {% else %}
-
-      {{answers.text[0]}}
-
-      {% endif %}'
-    metadata: *id002
-    name: Questions with Context - Without Prompt Keywords +unanswerable
-    reference: Given context and question, give answer. No keywords to delineate context
-      and question is given.
   e2e41877-4794-4ff9-9f92-a2a85105e2a7: !Template
     answer_choices: yes ||| no
     id: e2e41877-4794-4ff9-9f92-a2a85105e2a7
-    jinja: "Context: {{context}}; \n\nQuestion: {{question}} \n\n Từ thông tin trên có thề trả lời câu hỏi này có trả lời được\
+    jinja: "Context: {{context}}; \n\nQuestion: {{question}} \n\n Hãy cho tôi biết câu hỏi sau có thể trả lời dựa vào context đã cung cấp được\
       \ không? ||| \n{% if answers.text != [] %}\n{{answer_choices[0]}}\n{% else\
       \ %}\n{{answer_choices[1]}}\n{% endif %}"
     metadata: !TemplateMetadata
@@ -343,11 +239,11 @@ templates:
     id: e51c23b9-5b10-4db3-a0d1-ba546830173d
     jinja: '{% set seq = [
 
-      ''Xác định chủ đề dựa vào cặp câu hỏi và câu trả lời'',
+      ''Xác định chủ đề dựa vào cặp câu hỏi và câu trả lời. '',
 
-      ''Xác định chủ đề '',
+      ''Xác định chủ đề. '',
 
-      ''Chủ đề là gì? '',
+      ''Chủ đề của đoạn văn này là gì? '',
 
       ] %}
 
