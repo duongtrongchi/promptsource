@@ -1,0 +1,46 @@
+dataset: tdtunlp/mfag_vi
+templates:
+  21e4d34e-0f80-4056-8870-bb303ba12dcd: !Template
+    answer_choices: null
+    id: 21e4d34e-0f80-4056-8870-bb303ba12dcd
+    jinja: "{% set prompts = [
+      'Đọc đoạn văn sau và viết tóm tắt nội dung chính của nó: ',
+      'Tóm tắt ý chính của đoạn văn sau đây: ',
+      'Tóm tắt văn bản sau đây: ',
+      'Tóm tắt các điểm quan trọng từ đoạn trích sau: ',
+      'Tóm tắt nội dung chính của bài viết/đoạn văn sau đây: '
+      'Tóm tắt: '
+    ]%}
+    {{prompts | choice}} {{content}}
+    "
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - vi
+      metrics:
+      - BLEU
+      original_task: false
+    name: summary_at_the_first_sentences
+    reference: 'Prompt at the first sentences'
+  21e4d34e-0f80-4056-8870-bb303ba12dcc: !Template
+    answer_choices: null
+    id: 21e4d34e-0f80-4056-8870-bb303ba12dcc
+    jinja: "{% set prompts = [
+      'Tóm tắt nội dung chính của đoạn văn bản trên.',
+      'Tóm tắt ý chính của đoạn văn trên.',
+      'Tóm tắt nội dung chính của bài viết/đoạn văn trên.',
+      'Hãy tóm tắt các nội dung quan trọng của đoạn văn trên.'
+      'Tóm tắt: '
+    ]%}
+    {{content}}\n\n{{prompts | choice}} 
+    "
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      original_task: false
+    name: summary_at_the_last_sentences
+    reference: 'Prompt at the end sentences'

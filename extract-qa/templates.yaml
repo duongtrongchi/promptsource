@@ -1,0 +1,394 @@
+dataset: squad_v2
+templates:
+  17b83a3f-f748-42e6-9cdf-b2951dd8299d: !Template
+    answer_choices: null
+    id: 17b83a3f-f748-42e6-9cdf-b2951dd8299d
+    jinja: '{% set seq = [
+
+      ''Trả lời câu hỏi sau dựa vào context được cung cấp: '',
+
+      ''Câu trả lời là gì?'',
+
+      ] %}
+
+
+      {{ seq | choice }}
+
+      Context: {{context}};
+
+      Câu hỏi: {{question}};
+
+      Câu trả lời: |||
+
+      {% if answers.text == [] %}
+
+      Câu trả lời không có trong context
+
+      {% else %}
+
+      {{answers.text[0]}}
+
+      {% endif %}'
+    metadata: &id001 !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - Squad
+      original_task: true
+    name: Questions with Context
+    reference: Given context and question, give answer
+  189dcc58-fd13-4771-ad03-7879a61c7ab7: !Template
+    answer_choices: null
+    id: 189dcc58-fd13-4771-ad03-7879a61c7ab7
+    jinja: '{% if answers.text != [] %}
+
+      Tìm câu hỏi mà bạn có thể hỏi để có được câu trả lời sau, dựa vào context được cho trước
+
+      Context: {{context}};
+
+      Câu trả lời: {{answers.text[0]}};
+
+      Câu hỏi: |||
+
+      {{question}}
+
+      {% endif %}
+
+      '
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      original_task: false
+    name: Jeopardy with Context
+    reference: Given context and an answer, guess the question.
+  20064b80-e4d0-41b7-9135-92c0077d5044: !Template
+    answer_choices: null
+    id: 20064b80-e4d0-41b7-9135-92c0077d5044
+    jinja: '{% set seq = [
+
+      ''Chủ đề của đoạn văn này là gì?'',
+
+      ''Đoạn văn sau nói về chủ đề gì?'',
+
+      ''Chọn ra chủ đề phù hợp của đoạn văn sau: '',
+
+      ''Từ đoạn văn sau hãy chọn ra một chủ đề mà bạn nghĩ là phù hợp: '',
+
+      ''Tôi muốn biết chủ đề của đoạn văn này là gì?'',
+
+      ''Hãy cho tôi biết chủ đề của đoạn văn sau: '',
+
+      ''Dựa vào ngữ cảnh của đoạn văn sau, xác định chủ đề của đoạn văn này: '',
+
+      ] %}
+
+      {{ seq | choice }}
+
+      {{context}} |||
+
+      {{title | replace("_", " ")}}'
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      - Other
+      original_task: false
+    name: Topic Prediction - Context with randomized prompt options
+    reference: Asks to predict the topic given the context with additional input as
+      if a person is asking another person.
+  338cc143-361e-4796-b035-31fb2201c49f: !Template
+    answer_choices: null
+    id: 338cc143-361e-4796-b035-31fb2201c49f
+    jinja: '{% set seq = [
+
+      ''Đoạn văn trên nói về chủ đề gì?'',
+
+      ''Chủ đề của đoạn văn trên là gì?'',
+
+      ''Hãy cho tôi biết chủ đề của đoạn văn trên '',
+
+      ''Đoạn văn trên nói về gì?'',
+
+      ''Chủ đề của đoạn văn trên '',
+
+      ''Tôi muốn biết chủ đề của đoạn văn trên '',
+
+      ''Văn bản trên nói về gì? '',
+
+      ''Cho tôi biết đoạn văn bản trên nói về gì? '',
+
+      ] %}
+
+      {{context}}
+
+      {{ seq | choice }}|||
+
+      {{title | replace("_", " ")}}'
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      - Other
+      original_task: false
+    name: Topic Prediction - Context with randomized prompt options placed in the
+      end
+    reference: The prompt is placed at the end of Context
+  7a44cd99-7420-4456-aaaa-34e2c81d1679: !Template
+    answer_choices: null
+    id: 7a44cd99-7420-4456-aaaa-34e2c81d1679
+    jinja: '{% if answers.text != [] %}
+
+      Đặt câu hỏi dựa vào câu trả lời sau: 
+
+      Câu trả lời: {{answers.text[0]}};
+
+      Câu hỏi: |||
+
+      {{question}}
+
+      {% endif %}
+
+      '
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      original_task: false
+    name: Jeopardy without Context
+    reference: Given an answer, output a viable question. Context is omitted.
+  8bea1123-fd8d-4bac-96bf-b8a289ee74b3: !Template
+    answer_choices: null
+    id: 8bea1123-fd8d-4bac-96bf-b8a289ee74b3
+    jinja: '{% set seq = [
+
+      ''Dựa vào nội dung của đoạn văn sau, hãy cho tôi biết '',
+
+      ''Hãy lấy thông tin của đoạn văn bản cho trước và trả lời cho tôi câu hỏi sau: '',
+
+      ''Từ nội dung của đoạn văn trên, hãy cho tôi biết '',
+
+      ''Dựa vào thông tin của đoạn văn bản phía trước hãy trả lời cho tôi biết '',
+
+      ''Dựa vào thông tin của đoạn văn bản phía trước hãy trả lời câu hỏi sau: '',
+
+      ''Từ nội dung của đoạn văn phía trước, hãy cho tôi biết '',
+
+      ''Hãy trả lời câu hỏi: '',
+
+      ''Từ đoạn văn cho trước hãy tìm câu trả lời của câu hỏi:  '',
+
+      ''Answer: '',
+
+      '''',
+
+      ] %}
+
+      {{context}} {{ seq | choice }}{{question}}|||
+
+      {% if answers.text == [] %}
+
+      Câu trả lời không có trong context
+
+      {% else %}
+
+      {{answers.text[0]}}
+
+      {% endif %}'
+    metadata: &id002 !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - Squad
+      original_task: true
+    name: Questions with Context - Without Prompt Keywords
+    reference: Given context and question, give answer. No keywords to delineate context
+      and question is given.
+  b14c9843-fd56-42ff-817d-39e41963c847: !Template
+    answer_choices: null
+    id: b14c9843-fd56-42ff-817d-39e41963c847
+    jinja: '{% set seq = [
+
+      ''Hãy tìm câu trả lời dựa vào context sau:'',
+
+      ''Câu trả lời là gì?'',
+
+      ''Đáp án là gì?'',
+
+      ] %}
+
+
+      {{ seq | choice }}
+
+      Context: {{context}};
+
+      Câu hỏi: {{question}};
+
+      Nếu bạn không tìm thấy câu trả lời, hãy trả lời "unanswerable"
+
+      Câu trả lời: |||
+
+      {% if answers.text == [] %}
+
+      unanswerable
+
+      {% else %}
+
+      {{answers.text[0]}}
+
+      {% endif %}'
+    metadata: *id001
+    name: Questions with Context +unanswerable
+    reference: Given context and question, give answer
+  d768c181-1c9b-40c3-aa01-fc78c3b29875: !Template
+    answer_choices: null
+    id: d768c181-1c9b-40c3-aa01-fc78c3b29875
+    jinja: '{% if answers.text != [] %}
+
+      {{question}}|||
+
+      {{answers.text[0]}}
+
+      {% endif %}'
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      original_task: false
+    name: Trivia
+    reference: Given input and directly outputs answer.
+  e1630107-8f5d-44ce-8ccd-6fa80da80328: !Template
+    answer_choices: null
+    id: e1630107-8f5d-44ce-8ccd-6fa80da80328
+    jinja: '{% set seq = [
+
+      ''Hãy trả lời câu hỏi sau: '',
+
+      ''Trả lời câu hỏi: '',
+
+      ''Tôi muốn biết câu trả lời của '',
+
+      ''Tôi muốn hỏi rằng '',
+
+      ''Câu hỏi của tôi là '',
+
+      ''Trả lời câu hỏi sau: '',
+
+      ''Tìm câu trả lời của câu hỏi: '',
+
+      ''Câu trả lời: '',
+
+      '''',
+
+      ] %}
+
+      {{context}} {{ seq | choice }}{{question}} Nếu bạn không thể tìm được đáp án, hãy
+      trả lời là "unanswerable". |||
+
+      {% if answers.text == [] %}
+
+      unanswerable
+
+      {% else %}
+
+      {{answers.text[0]}}
+
+      {% endif %}'
+    metadata: *id002
+    name: Questions with Context - Without Prompt Keywords +unanswerable
+    reference: Given context and question, give answer. No keywords to delineate context
+      and question is given.
+  e2e41877-4794-4ff9-9f92-a2a85105e2a7: !Template
+    answer_choices: yes ||| no
+    id: e2e41877-4794-4ff9-9f92-a2a85105e2a7
+    jinja: "Context: {{context}}; \n\nQuestion: {{question}} \n\n Từ thông tin trên có thề trả lời câu hỏi này có trả lời được\
+      \ không? ||| \n{% if answers.text != [] %}\n{{answer_choices[0]}}\n{% else\
+      \ %}\n{{answer_choices[1]}}\n{% endif %}"
+    metadata: !TemplateMetadata
+      choices_in_prompt: true
+      languages:
+      - en
+      - vi
+      metrics:
+      - Accuracy
+      original_task: false
+    name: Unanwerable question
+    reference: The template checks if the question is answerable or not
+  e51c23b9-5b10-4db3-a0d1-ba546830173d: !Template
+    answer_choices: null
+    id: e51c23b9-5b10-4db3-a0d1-ba546830173d
+    jinja: '{% set seq = [
+
+      ''Xác định chủ đề dựa vào cặp câu hỏi và câu trả lời'',
+
+      ''Xác định chủ đề '',
+
+      ''Chủ đề là gì? '',
+
+      ] %}
+
+      {% if answers.text != [] %}
+
+      {{ seq | choice }}
+
+      Câu hỏi: {{question}};  Câu trả lời: {{answers.text[0]}}; Chủ đề: |||
+
+      {{title}}
+
+      {% endif %}'
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      - Other
+      original_task: false
+    name: Topic Prediction - Question and Answer Pair
+    reference: Given a Question-Answer pair, generate the topic.
+  fdcf132e-6c70-4188-999e-93601ee8e089: !Template
+    answer_choices: null
+    id: fdcf132e-6c70-4188-999e-93601ee8e089
+    jinja: 'Đoạn văn sau nói về điều gì?
+
+      {{context}} |||
+
+      {{title | replace("_", " ")}}'
+    metadata: !TemplateMetadata
+      choices_in_prompt: false
+      languages:
+      - en
+      - vi
+      metrics:
+      - BLEU
+      - ROUGE
+      - Other
+      original_task: false
+    name: Topic Prediction - Context
+    reference: Predict the topic from the passage
