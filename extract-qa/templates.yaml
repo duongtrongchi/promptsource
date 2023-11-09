@@ -7,9 +7,9 @@ templates:
 
       ''Trả lời câu hỏi sau dựa vào context được cung cấp ở dưới đây: '',
 
-      ''Hãy dựa vào context mà tôi sẽ cung cấp cho bạn dưới đây và trả lời câu hỏi.'',
+      ''Hãy dựa vào context mà tôi sẽ cung cấp cho bạn dưới đây và trả lời câu hỏi. '',
 
-      ''Dựa vào context mà tôi sắp cung cấp cho bạn, hãy trả lời câu hỏi.''
+      ''Dựa vào context mà tôi sắp cung cấp cho bạn, hãy trả lời câu hỏi. ''
 
       ] %}
 
@@ -75,15 +75,15 @@ templates:
     id: 20064b80-e4d0-41b7-9135-92c0077d5044
     jinja: '{% set seq = [
 
-      ''Chủ đề của đoạn văn này là gì?'',
+      ''Chủ đề của đoạn văn này là gì? '',
 
-      ''Đoạn văn sau nói về chủ đề gì?'',
+      ''Đoạn văn sau nói về chủ đề gì? '',
 
       ''Chọn ra chủ đề phù hợp của đoạn văn sau: '',
 
       ''Từ đoạn văn sau hãy chọn ra một chủ đề mà bạn nghĩ là phù hợp: '',
 
-      ''Tôi muốn biết chủ đề của đoạn văn này là gì?'',
+      ''Tôi muốn biết chủ đề của đoạn văn này là gì? '',
 
       ''Hãy cho tôi biết chủ đề của đoạn văn sau: ''
 
@@ -112,13 +112,13 @@ templates:
     id: 338cc143-361e-4796-b035-31fb2201c49f
     jinja: '{% set seq = [
 
-      ''Đoạn văn trên nói về chủ đề gì?'',
+      ''Đoạn văn trên nói về chủ đề gì? '',
 
-      ''Chủ đề của đoạn văn trên là gì?'',
+      ''Chủ đề của đoạn văn trên là gì? '',
 
       ''Hãy cho tôi biết chủ đề của đoạn văn trên '',
 
-      ''Đoạn văn trên nói về gì?'',
+      ''Đoạn văn trên nói về gì? '',
 
       ''Chủ đề của đoạn văn trên '',
 
@@ -218,22 +218,6 @@ templates:
     name: Questions with Context - Without Prompt Keywords
     reference: Given context and question, give answer. No keywords to delineate context
       and question is given.
-  e2e41877-4794-4ff9-9f92-a2a85105e2a7: !Template
-    answer_choices: yes ||| no
-    id: e2e41877-4794-4ff9-9f92-a2a85105e2a7
-    jinja: "Context: {{context}}; \n\nQuestion: {{question}} \n\n Hãy cho tôi biết câu hỏi sau có thể trả lời dựa vào context đã cung cấp được\
-      \ không? ||| \n{% if answers.text != [] %}\n{{answer_choices[0]}}\n{% else\
-      \ %}\n{{answer_choices[1]}}\n{% endif %}"
-    metadata: !TemplateMetadata
-      choices_in_prompt: true
-      languages:
-      - en
-      - vi
-      metrics:
-      - Accuracy
-      original_task: false
-    name: Unanwerable question
-    reference: The template checks if the question is answerable or not
   e51c23b9-5b10-4db3-a0d1-ba546830173d: !Template
     answer_choices: null
     id: e51c23b9-5b10-4db3-a0d1-ba546830173d
